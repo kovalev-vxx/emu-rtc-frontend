@@ -6,12 +6,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Socket from "socket.io-client";
 
 import { WEBSOCKET_SERVER_URL } from "@/globals/constants.ts";
+import ClientPeerProvider from "@/providers/ClientPeerProvider.tsx";
 import RoomContextProvider from "@/providers/RoomContextProvider.tsx";
 import SocketContextProvider from "@/providers/SocketContextProvider.tsx";
-import Root from "@/routes";
 import Client from "@/routes/client";
 import Initiator from "@/routes/initiator";
 import Layout from "@/routes/Layout.tsx";
+import Rooms from "@/routes/rooms";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: Routes.ROOMS,
-                element: <Root />,
+                element: <Rooms />,
             },
             {
                 path: Routes.GAMES,
@@ -63,7 +64,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
         <SocketContextProvider io={io}>
             <RoomContextProvider>
-                <RouterProvider router={router} />
+                <ClientPeerProvider>
+                    <RouterProvider router={router} />
+                </ClientPeerProvider>
             </RoomContextProvider>
         </SocketContextProvider>
     </QueryClientProvider>

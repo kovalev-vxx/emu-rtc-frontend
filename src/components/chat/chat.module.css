@@ -1,10 +1,14 @@
 .container {
+    background: hsl(var(--primary-foreground));
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
+    border-radius: calc(var(--radius) - 2px);
+    box-shadow:
+        0 0 2rem rgba(0, 0, 0, 0.075),
+        0 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .messagesBlockWrapper {
@@ -13,7 +17,29 @@
     min-height: 0;
 }
 
+.container .header {
+    padding: 1rem;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    background: hsl(var(--background));
+}
+
+.container .header .players {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.container .footer {
+    padding: 1rem;
+    width: 100%;
+    background: hsl(var(--background));
+}
+
 .messagesBlock {
+    padding: 0 1rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -21,21 +47,85 @@
     bottom: 0;
     min-height: 0;
     overflow: scroll;
+}
+
+.messagesBlock > div {
+    width: 100%;
+    padding: 1rem 0;
+    min-height: 100%;
     display: flex;
+    gap: 1rem;
     justify-content: flex-end;
     flex-direction: column;
 }
 
 .leftMessage {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    background: hsl(var(--background));
+    border-radius: 1.125rem 1.125rem 1.125rem 0;
+    min-height: 2.25rem;
+    width: fit-content;
+    max-width: 66%;
+    box-shadow:
+        0 0 2rem rgba(0, 0, 0, 0.075),
+        0 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
     align-self: start;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .centerMessage {
+    position: relative;
     font-weight: 300;
     font-size: 0.85rem;
     align-self: center;
 }
 
+.leftMessage .username {
+    position: absolute;
+    top: -1.4rem;
+    left: 0;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.rightMessage .username {
+    position: absolute;
+    top: -1.4rem;
+    right: 0;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
 .rightMessage {
+    position: relative;
+    animation: fadeIn 0.5s ease-in-out;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    color: hsl(var(--background));
+    background: hsl(var(--primary));
+    border-radius: 1.125rem 0 1.125rem 1.125rem;
+    min-height: 2.25rem;
+    width: fit-content;
+    max-width: 66%;
+    box-shadow:
+        0 0 2rem rgba(0, 0, 0, 0.075),
+        0 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
     align-self: end;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

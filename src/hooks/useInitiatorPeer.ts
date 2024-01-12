@@ -1,10 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import { Socket } from "socket.io-client";
 
 import { WEBRTC_CONFIG } from "@/globals/constants.ts";
 import { useIO } from "@/hooks/useIO.ts";
-import { RoomContext } from "@/providers/RoomContextProvider.tsx";
+import { useRoom } from "@/hooks/useRoom.ts";
 
 const initNewPeer = (user: User, io: Socket, peersMap: Map<string, Peer.Instance>) => {
     const _peer = new Peer({ initiator: true, trickle: false, config: WEBRTC_CONFIG });
@@ -25,7 +25,7 @@ export const useInitiatorPeer = () => {
     const peersMap = useRef<Map<string, Peer.Instance>>(new Map<string, Peer.Instance>());
     const [stream, setStream] = useState<MediaStream | null>(null);
     const { io } = useIO();
-    const { emulatorRef } = useContext(RoomContext);
+    const { emulatorRef } = useRoom();
 
     useEffect(() => {
         io.on("new_player", (user: User) => {
